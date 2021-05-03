@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS employeeTrackerDB;
-CREATE database employeeTrackerDB;
+DROP DATABASE IF EXISTS empTrackerDB;
+CREATE database empTrackerDB;
 
-USE employeeTrackerDB;
+USE empTrackerDB;
 
 CREATE TABLE department (
  id INT NOT NULL AUTO_INCREMENT,
@@ -27,6 +27,7 @@ CREATE TABLE employee (
   PRIMARY KEY (id)
 );
 
-SELECT * FROM department;
-select * from role;
-select * from employee;
+-- SELECT * FROM empTrackerDB;
+-- SELECT * FROM empTrackerDB.department;
+-- SELECT * FROM empTrackerDB.role;
+-- SELECT * FROM empTrackerDB.employee;
