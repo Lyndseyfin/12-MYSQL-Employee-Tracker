@@ -3,16 +3,10 @@ const inquirer = require('inquirer');
 
 const connection = mysql.createConnection({
   host: 'localhost',
-
-  // Your port; if not 3306
   port: 3306,
-
-  // Your username
   user: 'root',
-
-  // Be sure to update with your own MySQL password!
   password: '',
-  database: 'top_songsDB',
+  database: 'empTrackerDB',
 });
 
 connection.connect((err) => {
@@ -24,38 +18,48 @@ const runSearch = () => {
   inquirer
     .prompt({
       name: 'action',
-      type: 'rawlist',
+      type: 'list',
       message: 'What would you like to do?',
       choices: [
-        'Find songs by artist',
-        'Find all artists who appear more than once',
-        'Find data within a specific range',
-        'Search for a specific song',
-        'Find artists with a top song and top album in the same year',
+        'View all employees',
+        'View employees by department',
+        'Add an employee\'s',
+        'Remove employee\'s',
+        'Add Role',
+        'Remove Role',
+        'Done'
       ],
     })
     .then((answer) => {
       switch (answer.action) {
-        case 'Find songs by artist':
-          artistSearch();
+        case 'View employees':
+          viewEmployees();
           break;
 
-        case 'Find all artists who appear more than once':
-          multiSearch();
+        case 'View employees by department':
+          viewEmployeesByDepartment();
           break;
 
-        case 'Find data within a specific range':
-          rangeSearch();
+        case 'Add employee\'s':
+          addEmployee();
           break;
 
-        case 'Search for a specific song':
-          songSearch();
+        case 'Remove employee\'s':
+          removeEmployees();
           break;
 
-        case 'Find artists with a top song and top album in the same year':
-          songAndAlbumSearch();
+        case 'Add role':
+          addRole();
           break;
-
+        
+        case 'Remove role':
+            removeRole();
+            break;
+        
+        case 'Done':
+            connection.done();
+            break;
+        
         default:
           console.log(`Invalid action: ${answer.action}`);
           break;
@@ -63,7 +67,7 @@ const runSearch = () => {
     });
 };
 
-const artistSearch = () => {
+const viewEmployees = () => {
   inquirer
     .prompt({
       name: 'artist',

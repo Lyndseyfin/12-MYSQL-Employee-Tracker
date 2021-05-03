@@ -23,7 +23,8 @@ Myself
  lyndseyfinamore@gmail.com
 ## License
 ![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen)
-## Heroku
+## MySQL
 <a href="">Employee Tracker</a>
+
 ## Screenshot
 ![screenshot]()
