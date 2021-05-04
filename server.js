@@ -67,29 +67,30 @@ const runSearch = () => {
     });
 };
 
-const viewEmployees = () => {
-  inquirer
-    .prompt({
-      name: 'artist',
-      type: 'input',
-      message: 'What artist would you like to search for?',
-    })
-    .then((answer) => {
-      const query = 'SELECT position, song, year FROM top5000 WHERE ?';
-      connection.query(query, { artist: answer.artist }, (err, res) => {
-        res.forEach(({ position, song, year }) => {
-          console.log(
-            `Position: ${position} || Song: ${song} || Year: ${year}`
-          );
-        });
-        runSearch();
-      });
-    });
-};
+// const viewEmployees = () => {
+//   inquirer
+//     .prompt({
+//       name: 'artist',
+//       type: 'input',
+//       message: 'What artist would you like to search for?',
+//     })
+//     .then((answer) => {
+//       const query = 'SELECT position, song, year FROM top5000 WHERE ?';
+//       connection.query(query, { artist: answer.artist }, (err, res) => {
+//         res.forEach(({ position, song, year }) => {
+//           console.log(
+//             `Position: ${position} || Song: ${song} || Year: ${year}`
+//           );
+//         });
+//         runSearch();
+//       });
+//     });
+// };
 
-const multiSearch = () => {
+
+const viewEmployees = () => {
   const query =
-    'SELECT artist FROM top5000 GROUP BY artist HAVING count(*) > 1';
+    'SELECT * FROM e.id, e.first_name, e.last__name, e.role, e.department';
   connection.query(query, (err, res) => {
     res.forEach(({ artist }) => console.log(artist));
     runSearch();
