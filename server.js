@@ -40,26 +40,26 @@ const runSearch = () => {
           viewEmployeesByDepartment();
           break;
 
-        case 'Add employee\'s':
+        case 'View employees by role':
+          viewEmployeesByRole();
+          break;
+
+        case 'Add employee':
           addEmployee();
           break;
 
-        case 'Remove employee\'s':
+        case 'Remove employee':
           removeEmployees();
           break;
 
-        case 'Add role':
-          addRole();
-          break;
-        
         case 'Remove role':
-            removeRole();
-            break;
-        
+          removeRole();
+          break;
+
         case 'Done':
-            connection.done();
-            break;
-        
+          connection.done();
+          break;
+
         default:
           console.log(`Invalid action: ${answer.action}`);
           break;
@@ -67,127 +67,65 @@ const runSearch = () => {
     });
 };
 
-// const viewEmployees = () => {
-//   inquirer
-//     .prompt({
-//       name: 'artist',
-//       type: 'input',
-//       message: 'What artist would you like to search for?',
-//     })
-//     .then((answer) => {
-//       const query = 'SELECT position, song, year FROM top5000 WHERE ?';
-//       connection.query(query, { artist: answer.artist }, (err, res) => {
-//         res.forEach(({ position, song, year }) => {
-//           console.log(
-//             `Position: ${position} || Song: ${song} || Year: ${year}`
-//           );
-//         });
-//         runSearch();
-//       });
-//     });
-// };
-
-
 const viewEmployees = () => {
-  const query =
-    'SELECT * FROM e.id, e.first_name, e.last__name, e.role, e.department';
-  connection.query(query, (err, res) => {
-    res.forEach(({ artist }) => console.log(artist));
+  connection.query('SELECT * FROM employees', (err, res) => {
+    if (err) throw err;
+    console.table(res)
     runSearch();
   });
-};
 
-const rangeSearch = () => {
-  inquirer
-    .prompt([
-      {
-        name: 'start',
-        type: 'input',
-        message: 'Enter starting position: ',
-        validate(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        },
-      },
-      {
-        name: 'end',
-        type: 'input',
-        message: 'Enter ending position: ',
-        validate(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        },
-      },
-    ])
-    .then((answer) => {
-      const query =
-        'SELECT position,song,artist,year FROM top5000 WHERE position BETWEEN ? AND ?';
-      connection.query(query, [answer.start, answer.end], (err, res) => {
-        res.forEach(({ position, song, artist, year }) => {
-          console.log(
-            `Position: ${position} || Song: ${song} || Artist: ${artist} || Year: ${year}`
-          );
-        });
+
+  const viewEmployeesByDepartment = () => {
+    connection.query('SELECT * FROM department', (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      runSearch();
+    });
+
+    const viewEmployeesByRole = () => {
+      connection.query('SELECT * FROM role', (err, res) => {
+        if (err) throw err;
+        console.table(res);
         runSearch();
       });
+    }
+  }
+};
+
+const empSearch = () => {
+  connection.query(`SELECT employee.id, employee.first_name, employee.last_name, role.title AS job_title,role.salary,
+    CONCAT(manager.first_name ," ", manager.last_name) AS Manager FROM  employee LEFT JOIN role ON employee.role_id=role.id LEFT JOIN employee  manager ON manager.id = employee.manager_id`, (err, res) => {
+    // console.log(res);
+
+    if (err) throw err;
+
+    if (res.length > 0) {
+      console.log('\n')
+      console.log('** Employees **')
+      console.log('\n')
+      console.table(res);
+    }
+    //calls the menu to display questions again
+    connection.done();
+  })
+  };
+
+  const depSearch = () => {
+    console.log('Selecting all department...\n');
+    connection.query('SELECT * FROM department', (err, res) => {
+        if (err) throw err;
+        // Log all results of the SELECT statement
+        console.table(res);
+        connection.done();
     });
 };
 
-const songSearch = () => {
-  inquirer
-    .prompt({
-      name: 'song',
-      type: 'input',
-      message: 'What song would you like to look for?',
-    })
-    .then((answer) => {
-      console.log(answer.song);
-      connection.query(
-        'SELECT * FROM top5000 WHERE ?',
-        { song: answer.song },
-        (err, res) => {
-          if (res[0]) {
-            console.log(
-              `Position: ${res[0].position} || Song: ${res[0].song} || Artist: ${res[0].artist} || Year: ${res[0].year}`
-            );
-          } else {
-            console.error(`No results for ${answer.song}`);
-          }
-          runSearch();
-        }
-      );
-    });
-};
-
-const songAndAlbumSearch = () => {
-  inquirer
-    .prompt({
-      name: 'artist',
-      type: 'input',
-      message: 'What artist would you like to search for?',
-    })
-    .then((answer) => {
-      let query =
-        'SELECT top_albums.year, top_albums.album, top_albums.position, top5000.song, top5000.artist ';
-      query +=
-        'FROM top_albums INNER JOIN top5000 ON (top_albums.artist = top5000.artist AND top_albums.year ';
-      query +=
-        '= top5000.year) WHERE (top_albums.artist = ? AND top5000.artist = ?) ORDER BY top_albums.year, top_albums.position';
-
-      connection.query(query, [answer.artist, answer.artist], (err, res) => {
-        console.log(`${res.length} matches found!`);
-        res.forEach(({ year, position, artist, song, album }, i) => {
-          const num = i + 1;
-          console.log(
-            `${num} Year: ${year} Position: ${position} || Artist: ${artist} || Song: ${song} || Album: ${album}`
-          );
-        });
-
-        runSearch();
-      });
-    });
+const roleSearch = () => {
+  console.table('Selecting all role...\n');
+  connection.query('SELECT * FROM empRole', (err, res) => {
+      if (err) throw err;
+      // Log all results of the SELECT statement
+      console.table(res);
+      connection.done();
+  });
 };
