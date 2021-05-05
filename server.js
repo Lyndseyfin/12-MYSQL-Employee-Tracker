@@ -105,27 +105,39 @@ const empSearch = () => {
       console.log('\n')
       console.table(res);
     }
-    //calls the menu to display questions again
-    connection.done();
+    //display questions again
+    runSearch();
   })
-  };
+};
 
-  const depSearch = () => {
-    console.log('Selecting all department...\n');
-    connection.query('SELECT * FROM department', (err, res) => {
-        if (err) throw err;
-        // Log all results of the SELECT statement
-        console.table(res);
-        connection.done();
-    });
+const depSearch = () => {
+  connection.query(`SELECT * FROM department`, (err, res) => {
+    if (err) throw err;
+
+    if (res.length > 0) {
+      console.log('\n')
+      console.log(' ** Departments **')
+      console.log('\n')
+      console.table(res);
+    }
+
+    runSearch();
+  });
 };
 
 const roleSearch = () => {
-  console.table('Selecting all role...\n');
-  connection.query('SELECT * FROM empRole', (err, res) => {
-      if (err) throw err;
-      // Log all results of the SELECT statement
+  connection.query(`SELECT role.title AS job_title, role.id, department.name AS department_name, role.salary  FROM  role LEFT JOIN department ON role.department_id=department.id`,
+  (err, res) => {
+
+    if (err) throw err;
+
+    if (res.length > 0) {
+      console.log('\n')
+      console.log(' ** Roles **')
+      console.log('\n')
       console.table(res);
-      connection.done();
+    }
+  
+    runSearch();
   });
 };
