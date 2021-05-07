@@ -18,7 +18,7 @@ function runSearch () {
       type: 'list',
       message: 'Please select an option',
       choices: [
-        'View all employees',
+        'View employees',
         'View departments',
         'View employees by role',
         'Add an employee',
@@ -200,7 +200,7 @@ function updateRole() {
     {
       inquirer.prompt({
         type: "input",
-        message: "Which employee would you like to update? (please only use number from id column)",
+        message: "Which employee would you like to update?",
         name: "employee"
       });
     }

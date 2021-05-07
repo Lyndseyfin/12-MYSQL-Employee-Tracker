@@ -29,50 +29,5 @@ Myself
 ## Screenshot
 ![screenshot]()
 
-const empSearch = () => {
-  connection.query(`SELECT * FROM employee`, (err, res) => {
 
-    if (err) throw err;
-
-    if (res.length > 0) {
-      console.log('\n')
-      console.log('** employee **')
-      console.log('\n')
-      console.table(res);
-    }
-    //display questions again
-    runSearch();
-  })
-};
-
-const depSearch = () => {
-  connection.query(`SELECT * FROM department`, (err, res) => {
-    if (err) throw err;
-
-    if (res.length > 0) {
-      console.log('\n')
-      console.log(' ** department **')
-      console.log('\n')
-      console.table(res);
-    }
-
-    runSearch();
-  });
-};
-
-const roleSearch = () => {
-  connection.query(`SELECT  * FROM empRole`, (err, res) => {
-
-    if (err) throw err;
-
-    if (res.length > 0) {
-      console.log('\n')
-      console.log(' ** empRole **')
-      console.log('\n')
-      console.table(res);
-    }
-  
-    runSearch();
-  });
-};
 
