@@ -8,13 +8,7 @@ const connection = mysql.createConnection({
   user: 'root',
   password: 'Levijune20!',
   database: 'empTrackerDB',
-});
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log(`connected as id ${connection.threadId}\n`);
-  runSearch();
-});
+})
 
 
 function runSearch () {
@@ -212,3 +206,9 @@ function updateRole() {
     }
   });
 }
+
+connection.connect((err) => {
+  if (err) throw err;
+  console.log(`connected as id ${connection.threadId}\n`);
+  runSearch();
+});
