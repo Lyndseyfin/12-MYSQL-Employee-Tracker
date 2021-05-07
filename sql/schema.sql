@@ -4,30 +4,29 @@ CREATE database empTrackerDB;
 USE empTrackerDB;
 
 CREATE TABLE department (
- ID INT NOT NULL AUTO_INCREMENT,
- name VARCHAR(50) NULL,
- PRIMARY KEY (ID)
+ id INT NOT NULL AUTO_INCREMENT,
+ name VARCHAR(50) NOT NULL,
+ PRIMARY KEY (id)
 );
 
-CREATE TABLE role (
-  ID INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(30) NULL,
-  salary DECIMAL (10.5) NULL,
+CREATE TABLE empRole (
+  id INT NOT NULL AUTO_INCREMENT,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL (10.5) NOT NULL,
   department_id INT NOT NULL
-  PRIMARY KEY (ID),
+  PRIMARY KEY (id),
 
 );
 
 CREATE TABLE employee (
-  ID INT NOT NULL AUTO_INCREMENT,
-  first_name VARCHAR(30) NULL,
-  last_name VARCHAR(30) NULL,
-  role_id INT NULL,
-  manager_id INT NULL,
-  PRIMARY KEY (ID)
+  id INT NOT NULL AUTO_INCREMENT,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  role_id INT NOT NULL,
+  manager_id INT NOT NULL,
+  PRIMARY KEY (id)
 );
 
-SELECT * FROM empTrackerDB;
 SELECT * FROM empTrackerDB.department;
-SELECT * FROM empTrackerDB.role;
+SELECT * FROM empTrackerDB.empRole;
 SELECT * FROM empTrackerDB.employee;
