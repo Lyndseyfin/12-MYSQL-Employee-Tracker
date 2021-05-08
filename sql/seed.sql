@@ -1,19 +1,19 @@
 USE empTrackerDB;
 
-INSERT INTO department (name)
+INSERT INTO department (dept_name)
 VALUES ("Sales");
 
-INSERT INTO department (name)
+INSERT INTO department (dept_name)
 VALUES ("Engineering");
 
-INSERT INTO department (name)
+INSERT INTO department (dept_name)
 VALUES ("Finance");
 
-INSERT INTO department (name)
-VALUES ("Legal")
+INSERT INTO department (dept_name)
+VALUES ("Legal");
 
 
-INSERT INTO empRole (empTitle, salary, department_id)
+INSERT INTO empRole (title, salary, department_id)
 VALUES ("Sales Manager", 120000, 1);
 
 INSERT INTO empRole (title, salary, department_id)

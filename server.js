@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
 })
 
 
-function runSearch () {
+function runSearch() {
   inquirer
     .prompt({
       name: 'action',
@@ -20,16 +20,15 @@ function runSearch () {
       choices: [
         'View employees',
         'View departments',
-        'View employees by role',
+        'View roles',
         'Add an employee',
-        'Add a department',
-        'Add a role',
-        'Remove an employee',
-        'Update employee role',
+        'Add department',
+        'Add role',
+        'Update role',
         'Done'
       ],
     })
-    .then((answers) => {
+    .then(function(answers) {
       console.log(answers.action)
       switch (answers.action) {
         case 'View employees':
@@ -48,16 +47,12 @@ function runSearch () {
           addEmployee();
           break;
 
-        case 'Add a departmemt':
+        case 'Add department':
           addDepartment();
           break;
 
-        case 'Add a role':
+        case 'Add role':
           addRole();
-          break;
-
-        case 'Remove an employee':
-          removeEmployee();
           break;
 
         case 'Update role':
@@ -95,7 +90,7 @@ function viewDepartments() {
 
 function viewRoles() {
   const query = "SELECT * FROM empRole";
-  connection.query(query, function(err, res) {
+  connection.query(query, function (err, res) {
     if (err) throw err;
     console.table(res);
     runSearch();
@@ -126,13 +121,13 @@ function addEmployee() {
         name: "managerID"
       }
     ])
-    .then(function(res) {
+    .then(function (res) {
       const first = res.first;
       const last = res.last;
       const roleID = res.roleID;
       const managerID = res.managerID;
       const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE("${first}", "${last}", "${roleID}", "${managerID}")`;
-      connection.query(query, function(err, res) {
+      connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
         runSearch();
@@ -150,8 +145,8 @@ function addDepartment() {
     })
     .then(function(res) {
       const department = res.department;
-      const query = `INSERT INTO department (name) VALUES("${department}")`;
-      connection.query(query, function(err, res) {
+      const query = `INSERT INTO department (dept_name) VALUES("${department}")`;
+      connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
         runSearch();
@@ -179,12 +174,12 @@ function addRole() {
         name: "departmentID"
       }
     ])
-    .then(function(res) {
+    .then(function (res) {
       const title = res.title;
       const salary = res.salary;
       const departmentID = res.departmentID;
-      const query = `INSERT INTO role (title, salary, department_id) VALUE("${title}", "${salary}", "${departmentID}")`;
-      connection.query(query, function(err, res) {
+      const query = `INSERT INTO empRole (title, salary, department_id) VALUES ("${title}", "${salary}", "${departmentID}")`;
+      connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);
         runSearch();
@@ -194,7 +189,7 @@ function addRole() {
 
 function updateRole() {
   const query = "SELECT id, first_name, last_name, role_id  FROM employee";
-  connection.query(query, function(err, res) {
+  connection.query(query, function (err, res) {
     if (err) throw err;
     console.table(res);
     {
