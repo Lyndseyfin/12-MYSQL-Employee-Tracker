@@ -156,6 +156,7 @@ function addDepartment() {
 
 
 function addRole() {
+  //query for departments here
   inquirer
     .prompt([
       {
@@ -187,18 +188,47 @@ function addRole() {
     });
 }
 
+/**
+ * 
+ */
 function updateRole() {
   const query = "SELECT id, first_name, last_name, role_id  FROM employee";
   connection.query(query, function (err, res) {
     if (err) throw err;
+    let employees = res.map((employee)=>{
+      return{
+        name: employee.first_name + " " + employee.last_name,
+        value: employee.id
+      }
+    })
+    connection.query("SELECT * FROM empRole", function (err, res) {
+      if (err) throw err;
+      let roles = res.map((role)=>{
+        return{
+          name: role.title,
+          value: role.id
+        }
+      })
+  
     console.table(res);
-    {
-      inquirer.prompt({
-        type: "input",
+
+      inquirer.prompt([{
+        type: "list",
         message: "Which employee would you like to update?",
-        name: "employee"
-      });
-    }
+        name: "employee",
+        choices: employees
+      },
+      {type: "list",
+      message: "Which role would you like to update to?",
+      name: "role",
+      choices: roles
+    }]).then((res)=>{
+        connection.query("UPDATE employee SET role_id = ? WHERE id= ?", [res.role, res.employee], ()=>{
+          runSearch();
+        })
+        
+      })
+  })
   });
 }
 

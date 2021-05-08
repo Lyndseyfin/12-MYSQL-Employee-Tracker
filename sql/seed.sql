@@ -28,13 +28,13 @@ VALUES ("Attorney", 175000, 4);
 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Levi", "Collins", 1, 1);
+VALUES ("Levi", "Collins", 1, 2);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Jeremy", "Collins", 2, 12;
+VALUES ("Jeremy", "Collins", 2, 23;
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Chelsey", "Finamore", 3, 3);
+VALUES ("Chelsey", "Finamore", 3, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Kenzie", "Crane", 4, 4);
+VALUES ("Kenzie", "Crane", 4, 5);
