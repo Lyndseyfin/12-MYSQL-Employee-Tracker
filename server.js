@@ -145,7 +145,7 @@ function addDepartment() {
     })
     .then(function(res) {
       const department = res.department;
-      const query = `INSERT INTO department (dept_name) VALUES("${department}")`;
+      const query = `INSERT INTO department (name) VALUES("${department}")`;
       connection.query(query, function (err, res) {
         if (err) throw err;
         console.table(res);

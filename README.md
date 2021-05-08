@@ -1,7 +1,7 @@
 # 12-MYSQL-Employee-Tracker
 
 # Description
-
+This command line project uses MYSQL, Node and Inquirer to help manage a company's employees. It lets them view and add each employee, department and role in order to better organize their busineess. 
 
 # Table of Contents
 1. [Title](Title)
