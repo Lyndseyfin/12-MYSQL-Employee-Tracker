@@ -60,7 +60,7 @@ function runSearch() {
           break;
 
         case 'Done':
-          connection.done();
+          connection.end();
           break;
 
         default:
@@ -188,9 +188,7 @@ function addRole() {
     });
 }
 
-/**
- * 
- */
+
 function updateRole() {
   const query = "SELECT id, first_name, last_name, role_id  FROM employee";
   connection.query(query, function (err, res) {
