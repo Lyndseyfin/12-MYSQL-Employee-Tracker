@@ -27,7 +27,7 @@ Myself
 <a href="https://youtu.be/J2X1zKBns88">Employee Tracker</a>
 
 ## Screenshot
-![screenshot]()
+![screenshot](Assets/emp.png)
 
 
 
